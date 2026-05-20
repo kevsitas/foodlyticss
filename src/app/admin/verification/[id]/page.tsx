@@ -14,7 +14,7 @@ export default async function VerificationDetailPage({ params }: Props) {
 
   const { data: request } = await supabase
     .from("verification_requests")
-    .select("*, profiles!inner(full_name, email, avatar_url)")
+    .select("*, profiles!inner(full_name, avatar_url)")
     .eq("id", id)
     .single();
 

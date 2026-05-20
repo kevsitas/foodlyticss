@@ -10,7 +10,7 @@ export default async function AdminVerificationPage() {
 
   const { data: requests } = await supabase
     .from("verification_requests")
-    .select("*, profiles!inner(full_name, email, avatar_url)")
+    .select("*, profiles!inner(full_name, avatar_url)")
     .order("created_at", { ascending: false });
 
   const t = es.verification;
@@ -110,8 +110,7 @@ export default async function AdminVerificationPage() {
                           {req.profiles.full_name?.[0] || "?"}
                         </div>
                         <div>
-                          <p className="text-sm font-medium">{req.profiles.full_name || "Sin nombre"}</p>
-                          <p className="text-xs text-muted-foreground">{req.profiles.email || ""}</p>
+                          <p className="text-sm font-medium">{req.profiles?.full_name || "Sin nombre"}</p>
                         </div>
                       </div>
                     </td>

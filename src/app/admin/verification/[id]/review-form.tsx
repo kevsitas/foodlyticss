@@ -91,7 +91,6 @@ export function ReviewForm({ request }: Props) {
               </div>
               <div className="flex-1">
                 <h2 className="text-xl font-bold">{profile.full_name || "Sin nombre"}</h2>
-                <p className="text-sm text-muted-foreground">{profile.email || ""}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-0.5 text-xs font-medium capitalize">
                     <Shield className="h-3 w-3" />
