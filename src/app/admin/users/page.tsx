@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/roles";
-import { Users, Search, Shield, Trash2 } from "lucide-react";
+import { Users, Search, Shield } from "lucide-react";
 import { es } from "@/lib/i18n";
+import { DeleteUserButton } from "./delete-user-button";
 
 export default async function AdminUsersPage() {
   await requireRole(["admin"]);
@@ -60,6 +61,7 @@ export default async function AdminUsersPage() {
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Usuario</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Rol</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Registro</th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -90,6 +92,9 @@ export default async function AdminUsersPage() {
                       month: "short",
                       year: "numeric",
                     })}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <DeleteUserButton userId={profile.id} userName={profile.full_name || "usuario"} />
                   </td>
                 </tr>
               ))}

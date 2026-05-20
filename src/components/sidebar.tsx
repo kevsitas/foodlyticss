@@ -70,7 +70,6 @@ const roleNavItems: Record<UserRole, NavItem[]> = {
     { href: "/admin/dashboard", label: es.sidebar.nav.dashboard, icon: LayoutDashboard },
     { href: "/admin/verification", label: "Verificaciones", icon: Shield },
     { href: "/admin/users", label: es.sidebar.nav.users, icon: Users },
-    { href: "/admin/content", label: es.sidebar.nav.content, icon: FileText },
     { href: "/admin/analytics", label: es.sidebar.nav.analytics, icon: TrendingUp },
     { href: "/admin/settings", label: es.sidebar.nav.settings, icon: Settings },
   ],
