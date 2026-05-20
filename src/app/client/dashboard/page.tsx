@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { UtensilsCrossed, Flame, Apple, Wheat, Dumbbell } from "lucide-react";
+import Link from "next/link";
+import { UtensilsCrossed, Flame, Apple, Wheat, Dumbbell, ArrowRight } from "lucide-react";
 import { es } from "@/lib/i18n";
 import { completeOnboarding } from "@/app/actions/profiles";
 
@@ -167,18 +168,36 @@ export default async function ClientDashboardPage() {
         <div className="rounded-xl border border-border bg-card p-6">
           <h2 className="mb-4 text-lg font-semibold">{t.quickActions}</h2>
           <div className="space-y-3">
-            <button className="flex w-full items-center gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent">
-              <UtensilsCrossed className="h-4 w-4 text-primary" />
-              {t.logMeal}
-            </button>
-            <button className="flex w-full items-center gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent">
-              <Dumbbell className="h-4 w-4 text-primary" />
-              {t.logExercise}
-            </button>
-            <button className="flex w-full items-center gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent">
-              <Apple className="h-4 w-4 text-primary" />
-              {t.viewMealPlan}
-            </button>
+            <Link
+              href="/client/meals"
+              className="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent group"
+            >
+              <div className="flex items-center gap-3">
+                <UtensilsCrossed className="h-4 w-4 text-primary" />
+                {t.logMeal}
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/client/routines"
+              className="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent group"
+            >
+              <div className="flex items-center gap-3">
+                <Dumbbell className="h-4 w-4 text-primary" />
+                {t.logExercise}
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/client/meals"
+              className="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium transition-colors hover:bg-accent group"
+            >
+              <div className="flex items-center gap-3">
+                <Apple className="h-4 w-4 text-primary" />
+                {t.viewMealPlan}
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
         </div>
       </div>
