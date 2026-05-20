@@ -42,6 +42,16 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Redirect clients and users without role away from verify-identity
+  if (isVerifyIdentity && user) {
+    const role = user.user_metadata?.role as string || "";
+    if (!role || role === "client" || role === "admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/client/dashboard";
+      return NextResponse.redirect(url);
+    }
+  }
+
   // Allow /verify-identity for unverified or pending users
   if (isVerifyIdentity) {
     return supabaseResponse;
