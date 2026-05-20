@@ -12,10 +12,12 @@ import {
   FileCheck,
   Shield,
   ArrowRight,
+  LogOut,
 } from "lucide-react";
 import { es } from "@/lib/i18n";
 import { FileUpload } from "@/components/file-upload";
 import { submitVerification } from "@/app/actions/verification";
+import { logout } from "@/app/actions/auth";
 import type { VerificationRequest, VerificationFormState } from "@/types/verification";
 
 interface Props {
@@ -50,6 +52,15 @@ export function VerifyIdentityForm({
   if (verificationStatus === "approved") {
     return (
       <div className="flex min-h-screen items-center justify-center p-8">
+        <form action={logout} className="fixed right-4 top-4 z-50">
+          <button
+            type="submit"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <LogOut className="h-4 w-4" />
+            {es.sidebar.signOut}
+          </button>
+        </form>
         <div className="w-full max-w-md text-center">
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500/10">
             <CheckCircle2 className="h-10 w-10 text-emerald-500" />
@@ -71,6 +82,15 @@ export function VerifyIdentityForm({
   if (hasExistingRequest) {
     return (
       <div className="flex min-h-screen items-center justify-center p-8">
+        <form action={logout} className="fixed right-4 top-4 z-50">
+          <button
+            type="submit"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <LogOut className="h-4 w-4" />
+            {es.sidebar.signOut}
+          </button>
+        </form>
         <div className="w-full max-w-md text-center">
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-500/10">
             <Clock className="h-10 w-10 text-amber-500" />
@@ -132,12 +152,23 @@ export function VerifyIdentityForm({
       <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
         <div className="w-full max-w-sm">
           <div className="mb-8">
-            <Link href="/" className="mb-8 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <Leaf className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <span className="text-lg font-bold">{es.app.name}</span>
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+                  <Leaf className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <span className="text-lg font-bold">{es.app.name}</span>
+              </Link>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <LogOut className="h-4 w-4" />
+                  {es.sidebar.signOut}
+                </button>
+              </form>
+            </div>
             <h1 className="mt-8 text-2xl font-bold tracking-tight">{t.uploadTitle}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {isRejected ? t.rejectedHelp : t.uploadDesc}
