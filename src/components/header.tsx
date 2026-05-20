@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Leaf } from "lucide-react";
 import { es } from "@/lib/i18n";
 
@@ -23,7 +22,6 @@ export function Header() {
           <a href="#faq" className="text-sm text-muted-foreground transition-colors hover:text-foreground">{t.faq}</a>
         </nav>
         <div className="flex items-center gap-3">
-          <ThemeToggle />
           <Link
             href="/login"
             className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"

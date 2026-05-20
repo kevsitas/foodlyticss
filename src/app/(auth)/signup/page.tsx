@@ -1,13 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useActionState } from "react";
 import { signup } from "@/app/actions/auth";
 import Link from "next/link";
 import { Leaf, Loader2 } from "lucide-react";
 import { es } from "@/lib/i18n";
+import { RoleSelector } from "@/components/role-selector";
+import type { UserRole } from "@/types/database";
 
 export default function SignupPage() {
   const [state, formAction, pending] = useActionState(signup, undefined);
+  const [role, setRole] = useState<UserRole | null>(null);
   const t = es.signup;
 
   return (
@@ -93,6 +97,10 @@ export default function SignupPage() {
                 className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring focus:ring-1 focus:ring-ring"
               />
             </div>
+
+            <input type="hidden" name="role" value={role ?? ""} />
+
+            <RoleSelector value={role} onChange={setRole} />
 
             {state?.error && (
               <div className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">

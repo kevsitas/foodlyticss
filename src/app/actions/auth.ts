@@ -25,9 +25,16 @@ export async function login(_prev: unknown, formData: FormData) {
   }
 
   const role = data.user?.user_metadata?.role as UserRole | undefined;
-  if (role && role !== "client") {
+
+  // Unverified professionals must verify identity first
+  if (role === "nutritionist" || role === "trainer") {
+    const vStatus = data.user?.user_metadata?.verification_status as string | undefined;
+    if (vStatus !== "approved") {
+      redirect("/verify-identity");
+    }
     redirect(getRoleDashboard(role));
   }
+
   redirect("/client/dashboard");
 }
 
@@ -47,14 +54,20 @@ export async function signup(_prev: unknown, formData: FormData) {
     return { error: "Please select a valid role." };
   }
 
+  const metadata: Record<string, string> = {
+    full_name: fullName,
+    role: role,
+  };
+
+  if (role && role !== "client") {
+    metadata.verification_status = "pending";
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: {
-        full_name: fullName,
-        role: role,
-      },
+      data: metadata,
     },
   });
 

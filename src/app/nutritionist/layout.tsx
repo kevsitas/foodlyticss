@@ -1,12 +1,12 @@
 import { Sidebar } from "@/components/sidebar";
-import { requireRole } from "@/lib/roles";
+import { requireVerified } from "@/lib/roles";
 
 export default async function NutritionistLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { role } = await requireRole(["nutritionist", "admin"]);
+  const { role } = await requireVerified(["nutritionist", "admin"]);
 
   return (
     <div className="flex min-h-screen">

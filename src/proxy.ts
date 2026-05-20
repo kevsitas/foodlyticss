@@ -28,9 +28,24 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
-  // Allow public routes
+  // Allow public routes (and /verify-identity for unverified users)
   const publicRoutes = ["/login", "/signup", "/", "/auth/", "/_next/"];
   const isPublic = publicRoutes.some(r => pathname.startsWith(r));
+  const isVerifyIdentity = pathname.startsWith("/verify-identity");
+
+  // Redirect already-verified users from verify-identity to their dashboard
+  if (isVerifyIdentity && user?.user_metadata?.verification_status === "approved") {
+    const role = user.user_metadata?.role as string || "client";
+    const dashboard = ROLE_ROUTES[role] || "/client/dashboard";
+    const url = request.nextUrl.clone();
+    url.pathname = dashboard;
+    return NextResponse.redirect(url);
+  }
+
+  // Allow /verify-identity for unverified or pending users
+  if (isVerifyIdentity) {
+    return supabaseResponse;
+  }
 
   // Redirect authenticated users away from public routes
   if (user && (pathname === "/login" || pathname === "/signup")) {
@@ -51,6 +66,18 @@ export async function proxy(request: NextRequest) {
   // Role-based route protection
   if (user) {
     const role = user.user_metadata?.role as string || "client";
+    const vStatus = user.user_metadata?.verification_status as string | undefined;
+
+    // Redirect unverified professionals to verify-identity
+    if (
+      (role === "nutritionist" || role === "trainer") &&
+      vStatus !== "approved" &&
+      (pathname.startsWith("/nutritionist/") || pathname.startsWith("/trainer/"))
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/verify-identity";
+      return NextResponse.redirect(url);
+    }
     if (pathname.startsWith("/client/") && role !== "client" && role !== "admin") {
       const url = request.nextUrl.clone();
       url.pathname = ROLE_ROUTES[role] || "/login";

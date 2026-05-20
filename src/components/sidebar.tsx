@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { logout } from "@/app/actions/auth";
-import { ThemeToggle } from "@/components/theme-toggle";
 import type { UserRole } from "@/types/database";
 import { es } from "@/lib/i18n";
 
@@ -69,6 +68,7 @@ const roleNavItems: Record<UserRole, NavItem[]> = {
   ],
   admin: [
     { href: "/admin/dashboard", label: es.sidebar.nav.dashboard, icon: LayoutDashboard },
+    { href: "/admin/verification", label: "Verificaciones", icon: Shield },
     { href: "/admin/users", label: es.sidebar.nav.users, icon: Users },
     { href: "/admin/content", label: es.sidebar.nav.content, icon: FileText },
     { href: "/admin/analytics", label: es.sidebar.nav.analytics, icon: TrendingUp },
@@ -142,10 +142,6 @@ export function Sidebar({ role }: { role: UserRole }) {
 
         {/* Bottom */}
         <div className="border-t border-border/50 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="text-xs text-sidebar-muted">{t.theme}</span>
-            <ThemeToggle />
-          </div>
           <form action={logout}>
             <button
               type="submit"

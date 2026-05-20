@@ -1,12 +1,12 @@
 import { Sidebar } from "@/components/sidebar";
-import { requireRole } from "@/lib/roles";
+import { requireVerified } from "@/lib/roles";
 
 export default async function TrainerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { role } = await requireRole(["trainer", "admin"]);
+  const { role } = await requireVerified(["trainer", "admin"]);
 
   return (
     <div className="flex min-h-screen">

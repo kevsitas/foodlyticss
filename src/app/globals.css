@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(240 10% 3.9%);
@@ -29,32 +27,6 @@
   --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
   --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
   --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-.dark {
-  --color-background: hsl(240 10% 3.9%);
-  --color-foreground: hsl(0 0% 98%);
-  --color-primary: hsl(142 70% 50%);
-  --color-primary-foreground: hsl(240 10% 3.9%);
-  --color-secondary: hsl(240 3.7% 15.9%);
-  --color-secondary-foreground: hsl(0 0% 98%);
-  --color-muted: hsl(240 3.7% 15.9%);
-  --color-muted-foreground: hsl(240 5% 64.9%);
-  --color-accent: hsl(217 91% 60%);
-  --color-accent-foreground: hsl(0 0% 100%);
-  --color-destructive: hsl(0 72% 51%);
-  --color-border: hsl(240 3.7% 15.9%);
-  --color-input: hsl(240 3.7% 15.9%);
-  --color-ring: hsl(142 70% 50%);
-  --color-card: hsl(240 3.7% 10.9%);
-  --color-card-foreground: hsl(0 0% 98%);
-  --color-sidebar: hsl(240 5% 7.9%);
-  --color-sidebar-foreground: hsl(0 0% 98%);
-  --color-sidebar-accent: hsl(142 70% 50%);
-  --color-sidebar-muted: hsl(240 5% 64.9%);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
-  --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
-  --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 * {
