@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Users, ClipboardList, Calendar, TrendingUp, Download } from "lucide-react";
+import { Users, ClipboardList, Calendar, TrendingUp } from "lucide-react";
 import { es } from "@/lib/i18n";
+import { ExportButton } from "./export-button";
 
 export default async function NutritionistAnalyticsPage() {
   const supabase = await createClient();
@@ -79,10 +80,17 @@ export default async function NutritionistAnalyticsPage() {
           <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
           <p className="text-sm text-muted-foreground">{t.subtitle}</p>
         </div>
-        <button className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent">
-          <Download className="h-4 w-4" />
-          {t.exportReport}
-        </button>
+        <ExportButton
+          data={{
+            clients: clientCount ?? 0,
+            mealPlans: mealPlanCount ?? 0,
+            completedAppts: completedAppts ?? 0,
+            monthlyRevenue,
+            appointmentStats: { completed: completedCount, cancelled: cancelledCount, scheduled: scheduledCount, total: totalAppts },
+            clientGrowth: { labels: monthLabels, counts: monthCounts },
+            currentDate: new Date().toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }),
+          }}
+        />
       </div>
 
       {/* Summary cards */}
