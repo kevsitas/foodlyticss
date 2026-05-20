@@ -10,7 +10,7 @@ export default async function AdminVerificationPage() {
 
   const { data: requests } = await supabase
     .from("verification_requests")
-    .select("*, profiles!inner(full_name, avatar_url)")
+    .select("*, profiles!verification_requests_user_id_fkey!inner(full_name, avatar_url)")
     .order("created_at", { ascending: false });
 
   const t = es.verification;
