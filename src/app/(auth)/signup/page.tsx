@@ -108,12 +108,6 @@ export default function SignupPage() {
               </div>
             )}
 
-            {state?.success && (
-              <div className="rounded-lg bg-primary/10 px-3 py-2 text-sm text-primary">
-                {state.success}
-              </div>
-            )}
-
             <button
               type="submit"
               disabled={pending}

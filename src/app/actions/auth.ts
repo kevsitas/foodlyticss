@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import { getRoleDashboard } from "@/lib/roles";
 import type { UserRole } from "@/types/database";
@@ -39,8 +40,6 @@ export async function login(_prev: unknown, formData: FormData) {
 }
 
 export async function signup(_prev: unknown, formData: FormData) {
-  const supabase = await createClient();
-
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const fullName = formData.get("full_name") as string;
@@ -59,24 +58,21 @@ export async function signup(_prev: unknown, formData: FormData) {
     role: role,
   };
 
-  if (role && role !== "client") {
+  if (role !== "client") {
     metadata.verification_status = "pending";
   }
 
-  const { data, error } = await supabase.auth.signUp({
+  // Use admin client to auto-confirm email (no confirmation email sent)
+  const admin = createAdminClient();
+  const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
-    options: {
-      data: metadata,
-    },
+    email_confirm: true,
+    user_metadata: metadata,
   });
 
   if (error) {
     return { error: error.message };
-  }
-
-  if (data.user?.identities?.length === 0) {
-    return { success: "An account with this email already exists. Please sign in." };
   }
 
   redirect("/login?registered=true");
