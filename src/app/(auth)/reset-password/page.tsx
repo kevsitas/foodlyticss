@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Leaf, Loader2, CheckCircle2, Lock } from "lucide-react";
+import { Leaf, Loader2, CheckCircle2 } from "lucide-react";
 import { es } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 
@@ -18,16 +18,27 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
+
+    const params = new URLSearchParams(window.location.search);
+    const tokenHash = params.get("token_hash");
+
+    if (tokenHash) {
+      supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash }).then(({ error }) => {
+        if (error) {
+          setError("El enlace de recuperacion no es valido o ha expirado.");
+          setVerifying(false);
+        } else {
+          setVerifying(false);
+        }
+      });
+    } else {
+      // Check if session already has recovery scope (e.g. from onAuthStateChange)
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) setVerifying(false);
+        else setError("No se encontro un enlace de recuperacion valido.");
         setVerifying(false);
-      }
-    });
-    // If session already has the recovery flag, proceed
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setVerifying(false);
-      else setVerifying(false);
-    });
+      });
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
