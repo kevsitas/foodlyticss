@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public routes (and /verify-identity for unverified users)
-  const publicRoutes = ["/login", "/signup", "/", "/auth/", "/_next/"];
+  const publicRoutes = ["/login", "/signup", "/", "/auth/", "/forgot-password", "/reset-password", "/_next/"];
   const isPublic = publicRoutes.some(r => pathname.startsWith(r));
   const isVerifyIdentity = pathname.startsWith("/verify-identity");
 

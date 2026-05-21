@@ -83,3 +83,21 @@ export async function logout() {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+export async function generateResetLink(email: string) {
+  if (!email) return { success: false, error: "Email requerido." };
+
+  const admin = createAdminClient();
+  const { data, error } = await admin.auth.admin.generateLink({
+    type: "recovery",
+    email,
+    options: { redirectTo: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000/reset-password" },
+  });
+
+  if (error) return { success: false, error: error.message };
+
+  const link = data?.properties?.action_link;
+  if (!link) return { success: false, error: "No se pudo generar el enlace." };
+
+  return { success: true, link };
+}

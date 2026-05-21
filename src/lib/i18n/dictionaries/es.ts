@@ -189,6 +189,18 @@ export const es = {
     signIn: "Iniciar Sesion",
     noAccount: "No tienes cuenta?",
     signUp: "Registrate",
+    forgotPassword: "Olvidaste tu contrasena?",
+    forgotPasswordTitle: "Recuperar Contrasena",
+    forgotPasswordSubtitle: "Te enviaremos un enlace para restablecer tu contrasena.",
+    sendResetLink: "Enviar Enlace",
+    resetSent: "Revisa tu correo. Te enviamos un enlace para restablecer tu contrasena.",
+    resetPassword: "Nueva Contrasena",
+    resetPasswordSubtitle: "Ingresa tu nueva contrasena.",
+    newPassword: "Nueva Contrasena",
+    newPasswordPlaceholder: "Minimo 6 caracteres",
+    updatePassword: "Actualizar Contrasena",
+    passwordUpdated: "Contrasena actualizada correctamente.",
+    backToLogin: "Volver a Iniciar Sesion",
   },
 
   // Auth - Signup
